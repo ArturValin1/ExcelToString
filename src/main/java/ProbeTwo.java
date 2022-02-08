@@ -9,7 +9,11 @@ public class ProbeTwo {
             address.add(new Address("arh", "east", i));
             address.add(new Address("arh", "west", i));
             address.add(new Address("arh", "south", i));
+            address.add(new Address("otv", "zar", i));
+            address.add(new Address("otv", "centr", i));
+            address.add(new Address("otv", "zapad", i));
         }
+        address.add(new Address("otv", "zapad", 21));
         Map<String, Map<String, List<Integer>>> map = new HashMap<>();
         for (Address a : address) {
             if (map.keySet().contains(a.getTown())) {
