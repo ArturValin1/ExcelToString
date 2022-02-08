@@ -1,8 +1,7 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class MakeStringFromList {
-    public boolean comparePlusTwo(int a, int b) {    //сравниваем что второе число на два больше чем первое
+    public boolean comparePlusTwo(int a, int b) {
         boolean result = false;
         if (a + 2 == b)
             result = true;
@@ -10,11 +9,11 @@ public class MakeStringFromList {
     }
 
     public List<Integer> oddList(List<Integer> list) {
-        return new ArrayList<>(list.stream().filter(x -> (x & 1) != 0).distinct().toList());
+        return list.stream().filter(x -> (x & 1) != 0).distinct().toList();
     }
 
     public List<Integer> evenList(List<Integer> list) {
-        return new ArrayList<>(list.stream().filter(x -> (x & 1) == 0).distinct().toList());
+        return list.stream().filter(x -> (x & 1) == 0).distinct().toList();
     }
 
     public String makeStringFromNumber(List<Integer> list) {
@@ -50,7 +49,7 @@ public class MakeStringFromList {
         return result;
     }
 
-    public String resultString(List<Integer> list) { //Делаем строку заменяя промужуточные значения на -, т.е. из 1 3 5 делаем 1-5
+    public String resultString(List<Integer> list) {
         StringBuilder sb = new StringBuilder();
         List<Integer> even = evenList(list);
         List<Integer> odd = oddList(list);
@@ -59,6 +58,7 @@ public class MakeStringFromList {
         sb.append(oddString);
         sb.append("; ");
         sb.append(evenString);
+        sb.append(";");
         return sb.toString();
     }
 }
