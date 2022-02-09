@@ -8,11 +8,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 public class ExcelOne {
     public static void main(String[] args) throws IOException, InvalidFormatException {
+        long start = System.currentTimeMillis();
         FileInputStream file = new FileInputStream(new File("D:\\Java\\001.xlsx"));
         Workbook workbook = new XSSFWorkbook(file);
         Sheet sheet = workbook.getSheetAt(0);
@@ -21,24 +23,43 @@ public class ExcelOne {
         Iterator<Cell> cells;
         List<String> list = new ArrayList<>();
         int i = 0;
-        while (i++ < 13) {
+        int j = 0;
+        while (rows.hasNext()) {
+            i++;
             cells = rows.next().iterator();
             while (cells.hasNext()) {
-                System.out.print(String.format("%s |", cells.next()));
+                j++;
+                cells.next();
             }
-            System.out.println();
         }
-        workbook.close();
-        String fileToWrite = "D:\\Java\\002.xlsx";
-        writeToExcel(fileToWrite);
-        file.close();
+        System.out.println(String.format("rows = %s,  cells = %s", i, j));
+//        while (i++ < 13) {
+//            cells = rows.next().iterator();
+//            int j = 0;
+//            while (cells.hasNext()) {
+//                if (j++ == 14) {
+//                    list.add(cells.next().toString());
+//                } else
+//                    cells.next();
+//            }
+//            System.out.println();
+//        }
+
+//        String fileToWrite = "D:\\Java\\002.xlsx";
+//        writeToExcel(fileToWrite);
+//
 //        list.forEach(System.out::println);
 //        List<String[]> list1 = new ArrayList<>();
 //        list1.add(list.get(1).split(","));
 //        list1.add(list.get(5).split(","));
-//        list1.forEach(x->{
+//        list1.forEach(x -> {
 //            Arrays.stream(x).forEach(System.out::print);
 //        });
+
+        workbook.close();
+        file.close();
+        long end = System.currentTimeMillis();
+        System.out.println(String.format("start = %s, end = %s, e-s = %s, time work = %s", start, end, end - start, (end - start) / 1000));
     }
 
     public static void writeToExcel(String fileString) throws IOException {
