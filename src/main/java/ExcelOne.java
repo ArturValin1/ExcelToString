@@ -15,51 +15,58 @@ import java.util.List;
 public class ExcelOne {
     public static void main(String[] args) throws IOException, InvalidFormatException {
         long start = System.currentTimeMillis();
-        FileInputStream file = new FileInputStream(new File("D:\\Java\\001.xlsx"));
+        FileInputStream file = new FileInputStream(new File("D:\\Java_project\\001.xlsx"));
         Workbook workbook = new XSSFWorkbook(file);
         Sheet sheet = workbook.getSheetAt(0);
-        System.out.println(sheet.getSheetName());
+        List<Abonent> list = new ArrayList<>();
         Iterator<Row> rows = sheet.iterator();
         Iterator<Cell> cells;
-        List<String> list = new ArrayList<>();
-        int i = 0;
-        int j = 0;
+        rows.next();
         while (rows.hasNext()) {
-            i++;
             cells = rows.next().iterator();
-            while (cells.hasNext()) {
-                j++;
-                cells.next();
-            }
+            Integer nomer = (int) Float.parseFloat(cells.next().toString());
+            String station = cells.next().toString();
+            String fider10 = cells.next().toString();
+            String tp = cells.next().toString();
+            String fider04 = cells.next().toString();
+            String pointDelivery = cells.next().toString();
+            String dogovor = cells.next().toString();
+            String typeAbonent = cells.next().toString();
+            String address = cells.next().toString();
+            String district = cells.next().toString();
+            String numberCount = cells.next().toString();
+            Abonent abonent = new Abonent(nomer, station, fider10, tp, fider04, pointDelivery, dogovor, typeAbonent, address, district, numberCount);
+            list.add(abonent);
         }
-        System.out.println(String.format("rows = %s,  cells = %s", i, j));
-//        while (i++ < 13) {
-//            cells = rows.next().iterator();
-//            int j = 0;
-//            while (cells.hasNext()) {
-//                if (j++ == 14) {
-//                    list.add(cells.next().toString());
-//                } else
-//                    cells.next();
-//            }
-//            System.out.println();
+        System.out.println(list.size());
+        System.out.println(list.get(2).getAddress());
+        String str = list.get(2).getAddress();
+        String[] ss = str.split(", ");
+
+        Address address = new Address(ss[0], ss[1], Integer.parseInt(ss[2].split(". ")[1]));
+        System.out.println(address);
+
+
+//        String numDog, typePeople;
+//        rows.next();
+//        rows.next();
+//        cells = rows.next().iterator();
+//        for (int k = 0; k < 8; k++) {
+//            cells.next();
+//        }
+//        numDog = cells.next().toString();
+//        typePeople = cells.next().toString();
+//        if (typePeople.equals("Население")) {
+//            System.out.println(numDog.substring(0, 10));
+//            System.out.println(numDog.substring(11));
+//            System.out.println(typePeople);
 //        }
 
-//        String fileToWrite = "D:\\Java\\002.xlsx";
-//        writeToExcel(fileToWrite);
-//
-//        list.forEach(System.out::println);
-//        List<String[]> list1 = new ArrayList<>();
-//        list1.add(list.get(1).split(","));
-//        list1.add(list.get(5).split(","));
-//        list1.forEach(x -> {
-//            Arrays.stream(x).forEach(System.out::print);
-//        });
-
+//        System.out.println(String.format("rows = %s,  cells = %s", i, j));
         workbook.close();
         file.close();
-        long end = System.currentTimeMillis();
-        System.out.println(String.format("start = %s, end = %s, e-s = %s, time work = %s", start, end, end - start, (end - start) / 1000));
+//        long end = System.currentTimeMillis();
+//        System.out.println(String.format("start = %s, end = %s, e-s = %s, time work = %s", start, end, end - start, (end - start) / 1000));
     }
 
     public static void writeToExcel(String fileString) throws IOException {
