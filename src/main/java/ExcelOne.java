@@ -1,46 +1,90 @@
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 public class ExcelOne {
-    public static void main(String[] args) throws IOException {
-        FileInputStream file = new FileInputStream(new File("D:\\Java_project\\001.xlsx"));
+    public static void main(String[] args) throws IOException, InvalidFormatException {
+        FileInputStream file = new FileInputStream(new File("D:\\Java\\001.xlsx"));
         Workbook workbook = new XSSFWorkbook(file);
         Sheet sheet = workbook.getSheetAt(0);
         System.out.println(sheet.getSheetName());
         Iterator<Row> rows = sheet.iterator();
         Iterator<Cell> cells;
         List<String> list = new ArrayList<>();
-        int i=0;
-        while(i++<10){
-            cells=rows.next().iterator();
-            int j=0;
-            while(cells.hasNext()){
-                j++;
-                if(j==13){
-                    list.add( cells.next().toString());
-                    break;
-                } else{
-                    cells.next();
-                }
+        int i = 0;
+        while (i++ < 13) {
+            cells = rows.next().iterator();
+            while (cells.hasNext()) {
+                System.out.print(String.format("%s |", cells.next()));
             }
+            System.out.println();
         }
-        list.forEach(System.out::println);
-        List<String[]> list1 = new ArrayList<>();
-        list1.add(list.get(1).split(","));
-        list1.add(list.get(5).split(","));
-        list1.forEach(x->{
-            Arrays.stream(x).forEach(System.out::print);
-        });
+        workbook.close();
+        String fileToWrite = "D:\\Java\\002.xlsx";
+        writeToExcel(fileToWrite);
+        file.close();
+//        list.forEach(System.out::println);
+//        List<String[]> list1 = new ArrayList<>();
+//        list1.add(list.get(1).split(","));
+//        list1.add(list.get(5).split(","));
+//        list1.forEach(x->{
+//            Arrays.stream(x).forEach(System.out::print);
+//        });
+    }
+
+    public static void writeToExcel(String fileString) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(new File(fileString));
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("Persons");
+        sheet.setColumnWidth(0, 6000);
+        sheet.setColumnWidth(1, 4000);
+
+        Row header = sheet.createRow(0);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 16);
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Name");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Age");
+        headerCell.setCellStyle(headerStyle);
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+
+        Row row = sheet.createRow(2);
+        Cell cell = row.createCell(0);
+        cell.setCellValue("John Smith");
+        cell.setCellStyle(style);
+
+        cell = row.createCell(1);
+        cell.setCellValue(20);
+        cell.setCellStyle(style);
+        workbook.write(outputStream);
+        try {
+            workbook.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
