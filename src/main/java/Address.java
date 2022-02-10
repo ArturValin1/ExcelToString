@@ -1,9 +1,9 @@
 public class Address {
     private String town;
     private String street;
-    private Integer home;
+    private String home;
 
-    public Address(String town, String street, Integer home) {
+    public Address(String town, String street, String home) {
         this.town = town;
         this.street = street;
         this.home = home;
@@ -17,7 +17,7 @@ public class Address {
         return street;
     }
 
-    public Integer getHome() {
+    public String getHome() {
         return home;
     }
 

@@ -6,15 +6,17 @@ public class ProbeTwo {
         MakeStringFromList mstr = new MakeStringFromList();
         List<Address> address = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            address.add(new Address("arh", "east", i));
-            address.add(new Address("arh", "west", i));
-            address.add(new Address("arh", "south", i));
-            address.add(new Address("otv", "zar", i));
-            address.add(new Address("otv", "centr", i));
-            address.add(new Address("otv", "zapad", i));
+            address.add(new Address("arh", "east",  String.format("%s",i)));
+            address.add(new Address("arh", "west", String.format("%s",i)));
+            address.add(new Address("arh", "south",String.format("%s",i)));
+            address.add(new Address("otv", "zar",  String.format("%s",i)));
+            address.add(new Address("otv", "centr",String.format("%s",i)));
+            address.add(new Address("otv", "zapad",String.format("%s",i)));
         }
-        address.add(new Address("otv", "zapad", 21));
-        Map<String, Map<String, List<Integer>>> map = new HashMap<>();
+        address.add(new Address("otv", "zapad", String.format("%sa",21)));
+        address.add(new Address("otv", "zapad", String.format("%sb",21)));
+        address.add(new Address("otv", "zapad", String.format("%sa/3f",21)));
+        Map<String, Map<String, List<String>>> map = new HashMap<>();
         for (Address a : address) {
             if (map.keySet().contains(a.getTown())) {
                 if (map.get(a.getTown()).keySet().contains(a.getStreet())) {

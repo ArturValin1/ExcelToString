@@ -7,15 +7,30 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ExcelOne {
     public static void main(String[] args) throws IOException, InvalidFormatException {
         long start = System.currentTimeMillis();
-        FileInputStream file = new FileInputStream(new File("D:\\Java_project\\001.xlsx"));
+        MakeStringFromList mks = new MakeStringFromList();
+        List<String> list1 = new ArrayList<>();
+        list1.add("1");
+        list1.add("1a");
+        list1.add("3");
+        list1.add("5");
+        list1.add("5b");
+
+
+
+        list1.forEach(e -> {
+            System.out.println(String.format("%s is number %s", e, mks.isNumber(e)));
+        });
+
+        list1.stream().filter(e-> !mks.isNumber(e)).toList().forEach(System.out::println);
+
+
+        String fileStr = "D:\\Java\\001.xlsx";
+        FileInputStream file = new FileInputStream(new File(fileStr));
         Workbook workbook = new XSSFWorkbook(file);
         Sheet sheet = workbook.getSheetAt(0);
         List<Abonent> list = new ArrayList<>();
@@ -43,8 +58,8 @@ public class ExcelOne {
         String str = list.get(2).getAddress();
         String[] ss = str.split(", ");
 
-        Address address = new Address(ss[0], ss[1], Integer.parseInt(ss[2].split(". ")[1]));
-        System.out.println(address);
+//        Address address = new Address(ss[0], ss[1], Integer.parseInt(ss[2].split(". ")[1]));
+//        System.out.println(address);
 
 
 //        String numDog, typePeople;
