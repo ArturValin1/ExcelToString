@@ -27,8 +27,5 @@ public class SomeTest {
                         " sizeHome = %s, number %s", s, a, map.get(s).get(a).size(), mstr.resultString(map.get(s).get(a))));
             }
         }
-//        System.out.println("=================");
-//        System.out.println(map.get("пгт Архара").get("Калинина").get(0));
-//        System.out.println("=================");
     }
 }
