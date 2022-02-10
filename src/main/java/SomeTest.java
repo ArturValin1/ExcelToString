@@ -1,22 +1,10 @@
 import java.util.*;
 
-public class ProbeTwo {
-
-    public static void main(String[] args) {
+public class SomeTest {
+    public void printList(List<Address> address) {
         MakeStringFromList mstr = new MakeStringFromList();
-        List<Address> address = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            address.add(new Address("arh", "east",  String.format("%s",i)));
-            address.add(new Address("arh", "west", String.format("%s",i)));
-            address.add(new Address("arh", "south",String.format("%s",i)));
-            address.add(new Address("otv", "zar",  String.format("%s",i)));
-            address.add(new Address("otv", "centr",String.format("%s",i)));
-            address.add(new Address("otv", "zapad",String.format("%s",i)));
-        }
-        address.add(new Address("otv", "zapad", String.format("%sa",21)));
-        address.add(new Address("otv", "zapad", String.format("%sb",21)));
-        address.add(new Address("otv", "zapad", String.format("%sa/3f",21)));
         Map<String, Map<String, List<String>>> map = new HashMap<>();
+        int i = 0;
         for (Address a : address) {
             if (map.keySet().contains(a.getTown())) {
                 if (map.get(a.getTown()).keySet().contains(a.getStreet())) {
@@ -25,10 +13,12 @@ public class ProbeTwo {
                     map.get(a.getTown()).put(a.getStreet(), new ArrayList<>());
                     map.get(a.getTown()).get(a.getStreet()).add(a.getHome());
                 }
+                System.out.println(String.format("i = %s, %s", i++, a));
             } else {
                 map.put(a.getTown(), new HashMap<>());
                 map.get(a.getTown()).put(a.getStreet(), new ArrayList<>());
                 map.get(a.getTown()).get(a.getStreet()).add(a.getHome());
+                System.out.println(String.format("i = %s, %s", i++, a));
             }
         }
         for (String s : map.keySet()) {
@@ -37,5 +27,8 @@ public class ProbeTwo {
                         " sizeHome = %s, number %s", s, a, map.get(s).get(a).size(), mstr.resultString(map.get(s).get(a))));
             }
         }
+//        System.out.println("=================");
+//        System.out.println(map.get("пгт Архара").get("Калинина").get(0));
+//        System.out.println("=================");
     }
 }
