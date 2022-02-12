@@ -1,10 +1,8 @@
 import java.util.*;
 
 public class SomeTest {
-    public void printList(List<Address> address) {
-        MakeStringFromList mstr = new MakeStringFromList();
+    public Map<String, Map<String, List<String>>> createOffHomeFromAddress(List<Address> address) {
         Map<String, Map<String, List<String>>> map = new HashMap<>();
-        int i = 0;
         for (Address a : address) {
             if (map.keySet().contains(a.getTown())) {
                 if (map.get(a.getTown()).keySet().contains(a.getStreet())) {
@@ -13,14 +11,17 @@ public class SomeTest {
                     map.get(a.getTown()).put(a.getStreet(), new ArrayList<>());
                     map.get(a.getTown()).get(a.getStreet()).add(a.getHome());
                 }
-                System.out.println(String.format("i = %s, %s", i++, a));
             } else {
                 map.put(a.getTown(), new HashMap<>());
                 map.get(a.getTown()).put(a.getStreet(), new ArrayList<>());
                 map.get(a.getTown()).get(a.getStreet()).add(a.getHome());
-                System.out.println(String.format("i = %s, %s", i++, a));
             }
         }
+        return map;
+    }
+
+    public void printMap(Map<String, Map<String, List<String>>> map) {
+        MakeStringFromList mstr = new MakeStringFromList();
         for (String s : map.keySet()) {
             for (String a : map.get(s).keySet()) {
                 System.out.println(String.format("town = %s, street = %s," +
